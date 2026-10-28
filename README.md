@@ -1,2 +1,122 @@
-# Calculos-Agronomicos
-Calculos Gerais e Agronomicos
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroCalc — Calculadora Rural e Financeira</title>
+<style>
+:root{--bg:#0b1210;--panel:#121d19;--panel2:#182720;--line:#2b4035;--text:#edf5ef;--muted:#a7b9ad;--accent:#8bd450;--accent2:#c5f28e;--danger:#ffb3a8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#1b3827 0,transparent 42%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1160px;margin:auto;padding:28px 18px 48px}.hero{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.eyebrow{color:var(--accent2);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.06;margin:8px 0 12px;letter-spacing:-.04em}.hero p{max-width:690px;color:var(--muted);margin:0}.logo{width:76px;height:76px;flex-shrink:0;border:1px solid #42633e;background:#172b1e;border-radius:22px;display:grid;place-items:center;font-size:36px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700}.tab.active,.tab:hover{background:var(--accent);color:#14200e;border-color:var(--accent)}
+.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:18px}.panel{background:linear-gradient(160deg,var(--panel),#0f1814);border:1px solid var(--line);border-radius:20px;padding:22px;min-width:0}.panel h2{margin:0 0 6px;font-size:22px}.sub{color:var(--muted);font-size:14px;margin:0 0 20px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:700;color:#dce9df}.field small{color:var(--muted);font-size:12px}input,select{width:100%;padding:12px 13px;border-radius:10px;border:1px solid #355042;background:#0b1410;color:var(--text);font:inherit;outline:none}input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8bd45022}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{border:0;border-radius:11px;padding:12px 17px;background:var(--accent);color:#15220f;font-weight:800;cursor:pointer}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.resultbox{border:1px solid #42633e;background:linear-gradient(145deg,#1b3020,#142119);border-radius:16px;padding:20px;margin:18px 0}.resultlabel{color:var(--accent2);font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.result{font-size:clamp(27px,4vw,38px);font-weight:850;letter-spacing:-.04em;overflow-wrap:anywhere;margin:5px 0}.resultnote{color:var(--muted);font-size:13px}.detailrow{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #26392e;font-size:14px}.detailrow:last-child{border:0}.detailrow span:first-child{color:var(--muted)}.formula{background:#0b1410;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:16px;font-size:13px;color:var(--muted)}.formula strong{display:block;color:#dce9df;margin-bottom:5px}.notice{font-size:12px;color:var(--muted);margin-top:16px}.hidden{display:none!important}.section-title{font-size:13px;color:var(--accent2);font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin:20px 0 10px}.footer{margin-top:22px;color:var(--muted);font-size:12px;text-align:center}.tag{display:inline-block;font-size:11px;background:#263d2b;color:var(--accent2);border-radius:6px;padding:4px 7px;margin-bottom:10px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.hero{align-items:flex-start}.logo{width:58px;height:58px;border-radius:16px;font-size:28px}.panel{padding:17px}}@media(max-width:450px){.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.wrap{padding:20px 12px 36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div><div class="eyebrow">Ferramenta de apoio • Gestão rural</div><h1>AgroCalc<span style="color:var(--accent)">.</span></h1><p>Calculadora de cálculos gerais, matemática financeira e indicadores do agronegócio. Informe os dados, calcule e confira a fórmula utilizada.</p></div>
+  <div class="logo" aria-hidden="true">🌱</div>
+</header>
+<nav class="tabs" aria-label="Categorias">
+  <button class="tab active" data-tab="renda">Renda agrícola</button>
+  <button class="tab" data-tab="deprec">Depreciação</button>
+  <button class="tab" data-tab="juros">Juros</button>
+  <button class="tab" data-tab="agro">Produção rural</button>
+  <button class="tab" data-tab="geral">Cálculos gerais</button>
+</nav>
+
+<main>
+<section id="renda" class="calc">
+<div class="layout">
+<div class="panel">
+<span class="tag">GESTÃO ECONÔMICA</span><h2>Renda agrícola</h2><p class="sub">Estime a receita, os custos informados e a renda líquida de uma atividade rural.</p>
+<div class="fields">
+<div class="field"><label for="ra-prod">Produção vendida (unidades)</label><input id="ra-prod" type="number" min="0" step="any" value="1000"></div>
+<div class="field"><label for="ra-preco">Preço de venda por unidade (R$)</label><input id="ra-preco" type="number" min="0" step="any" value="2.5"></div>
+<div class="field"><label for="ra-custeio">Custos variáveis / custeio (R$)</label><input id="ra-custeio" type="number" min="0" step="any" value="900"></div>
+<div class="field"><label for="ra-outros">Outros custos considerados (R$)</label><input id="ra-outros" type="number" min="0" step="any" value="250"></div>
+<div class="field full"><label for="ra-area">Área utilizada (ha), opcional</label><input id="ra-area" type="number" min="0" step="any" placeholder="Ex.: 12,5"></div>
+</div><div class="actions"><button class="btn" onclick="calcRenda()">Calcular renda</button><button class="btn secondary" onclick="resetForm('renda')">Restaurar exemplo</button></div>
+</div>
+<div class="panel"><h2>Resultado</h2><p class="sub">Estimativa com base nos valores informados.</p><div class="resultbox"><div class="resultlabel">Renda após custos informados</div><div class="result" id="ra-result">R$ 1.350,00</div><div class="resultnote" id="ra-note">Valor estimado; não representa necessariamente o lucro contábil.</div></div>
+<div class="detailrow"><span>Receita bruta</span><strong id="ra-receita">R$ 2.500,00</strong></div><div class="detailrow"><span>Total de custos informados</span><strong id="ra-total">R$ 1.150,00</strong></div><div class="detailrow"><span>Renda por hectare</span><strong id="ra-ha">—</strong></div>
+<div class="formula"><strong>Fórmulas utilizadas</strong>Receita bruta = quantidade vendida × preço unitário<br>Renda estimada = receita bruta − custos informados<br>Renda por hectare = renda estimada ÷ área (quando informada)</div>
+<p class="notice">A definição de “renda agrícola” pode variar conforme a metodologia da aula ou do estudo. Inclua todos os custos exigidos pelo seu método, como mão de obra, depreciação, juros e arrendamentos, quando aplicável.</p></div>
+</div>
+</section>
+
+<section id="deprec" class="calc hidden">
+<div class="layout"><div class="panel"><span class="tag">PATRIMÔNIO E CUSTOS</span><h2>Depreciação linear</h2><p class="sub">Calcule a depreciação anual e mensal de máquinas, equipamentos, instalações ou veículos.</p>
+<div class="fields">
+<div class="field"><label for="dp-valor">Valor de aquisição (R$)</label><input id="dp-valor" type="number" min="0" step="any" value="230000"></div>
+<div class="field"><label for="dp-residual">Valor residual ao final (R$)</label><input id="dp-residual" type="number" min="0" step="any" value="30000"></div>
+<div class="field"><label for="dp-vida">Vida útil (anos)</label><input id="dp-vida" type="number" min="0.01" step="any" value="10"></div>
+<div class="field"><label for="dp-idade">Anos de uso até agora</label><input id="dp-idade" type="number" min="0" step="any" value="3"></div>
+</div><div class="actions"><button class="btn" onclick="calcDeprec()">Calcular depreciação</button><button class="btn secondary" onclick="resetForm('deprec')">Restaurar exemplo</button></div></div>
+<div class="panel"><h2>Resultado</h2><p class="sub">Método linear, sem atualização monetária.</p><div class="resultbox"><div class="resultlabel">Depreciação anual</div><div class="result" id="dp-result">R$ 20.000,00</div><div class="resultnote" id="dp-note">Valor depreciável dividido pela vida útil.</div></div>
+<div class="detailrow"><span>Valor depreciável</span><strong id="dp-base">R$ 200.000,00</strong></div><div class="detailrow"><span>Depreciação mensal média</span><strong id="dp-mes">R$ 1.666,67</strong></div><div class="detailrow"><span>Depreciação acumulada estimada</span><strong id="dp-acum">R$ 60.000,00</strong></div><div class="detailrow"><span>Valor contábil estimado atual</span><strong id="dp-atual">R$ 170.000,00</strong></div>
+<div class="formula"><strong>Fórmulas utilizadas</strong>Depreciação anual = (valor de aquisição − valor residual) ÷ vida útil<br>Depreciação acumulada = depreciação anual × anos de uso, limitada ao valor depreciável</div><p class="notice">É uma estimativa pelo método linear. Vida útil, valor residual e tratamento contábil/fiscal devem ser definidos conforme o bem e as regras aplicáveis.</p></div></div>
+</section>
+
+<section id="juros" class="calc hidden">
+<div class="layout"><div class="panel"><span class="tag">MATEMÁTICA FINANCEIRA</span><h2>Juros simples e compostos</h2><p class="sub">Compare os dois métodos para empréstimos, investimentos ou exercícios.</p>
+<div class="fields">
+<div class="field"><label for="ju-cap">Capital inicial (R$)</label><input id="ju-cap" type="number" min="0" step="any" value="10000"></div>
+<div class="field"><label for="ju-taxa">Taxa de juros (% por período)</label><input id="ju-taxa" type="number" min="0" step="any" value="1.5"></div>
+<div class="field"><label for="ju-tempo">Número de períodos</label><input id="ju-tempo" type="number" min="0" step="any" value="12"></div>
+<div class="field"><label for="ju-tipo">Método</label><select id="ju-tipo"><option value="comp">Juros compostos</option><option value="simp">Juros simples</option></select></div>
+</div><div class="actions"><button class="btn" onclick="calcJuros()">Calcular juros</button><button class="btn secondary" onclick="resetForm('juros')">Restaurar exemplo</button></div></div>
+<div class="panel"><h2>Resultado</h2><p class="sub">A taxa informada vale para cada período indicado.</p><div class="resultbox"><div class="resultlabel">Montante final</div><div class="result" id="ju-result">R$ 11.956,18</div><div class="resultnote" id="ju-note">Juros compostos.</div></div>
+<div class="detailrow"><span>Capital inicial</span><strong id="ju-capout">R$ 10.000,00</strong></div><div class="detailrow"><span>Juros acumulados</span><strong id="ju-acum">R$ 1.956,18</strong></div><div class="detailrow"><span>Taxa total equivalente no período</span><strong id="ju-totalrate">19,56%</strong></div>
+<div class="formula"><strong>Fórmulas utilizadas</strong>Simples: J = C × i × n; M = C + J<br>Compostos: M = C × (1 + i)ⁿ; J = M − C<br>C = capital, i = taxa decimal por período, n = número de períodos.</div><p class="notice">Não misture taxa mensal com prazo em anos. Taxa e quantidade de períodos precisam estar na mesma unidade.</p></div></div>
+</section>
+
+<section id="agro" class="calc hidden">
+<div class="layout"><div class="panel"><span class="tag">INDICADORES DO CAMPO</span><h2>Produção e produtividade</h2><p class="sub">Calcule produtividade por hectare, receita bruta e custo por unidade produzida.</p>
+<div class="fields">
+<div class="field"><label for="ag-prod">Produção total</label><input id="ag-prod" type="number" min="0" step="any" value="7200"></div>
+<div class="field"><label for="ag-unid">Unidade da produção</label><select id="ag-unid"><option>kg</option><option>toneladas</option><option>sacas</option><option>litros</option><option>unidades</option></select></div>
+<div class="field"><label for="ag-area">Área (ha)</label><input id="ag-area" type="number" min="0.0001" step="any" value="12"></div>
+<div class="field"><label for="ag-preco">Preço de venda por unidade (R$)</label><input id="ag-preco" type="number" min="0" step="any" value="2.4"></div>
+<div class="field full"><label for="ag-custo">Custo total da atividade (R$)</label><input id="ag-custo" type="number" min="0" step="any" value="9000"></div>
+</div><div class="actions"><button class="btn" onclick="calcAgro()">Calcular indicadores</button><button class="btn secondary" onclick="resetForm('agro')">Restaurar exemplo</button></div></div>
+<div class="panel"><h2>Resultado</h2><p class="sub">Indicadores calculados com a unidade escolhida.</p><div class="resultbox"><div class="resultlabel">Produtividade</div><div class="result" id="ag-result">600 kg/ha</div><div class="resultnote" id="ag-note">Produção total dividida pela área.</div></div>
+<div class="detailrow"><span>Receita bruta estimada</span><strong id="ag-rec">R$ 17.280,00</strong></div><div class="detailrow"><span>Resultado após custo informado</span><strong id="ag-margem">R$ 8.280,00</strong></div><div class="detailrow"><span>Custo por unidade produzida</span><strong id="ag-custo-un">R$ 1,25</strong></div>
+<div class="formula"><strong>Fórmulas utilizadas</strong>Produtividade = produção total ÷ área (ha)<br>Receita bruta = produção vendida × preço por unidade<br>Resultado estimado = receita bruta − custo total<br>Custo unitário = custo total ÷ produção total</div><p class="notice">Use o preço e a quantidade comercializada reais. Se houver perdas, estoque ou produção não vendida, ajuste os dados antes de interpretar a receita.</p></div></div>
+</section>
+
+<section id="geral" class="calc hidden">
+<div class="layout"><div class="panel"><span class="tag">FERRAMENTAS RÁPIDAS</span><h2>Cálculos gerais</h2><p class="sub">Operações básicas, porcentagem e conversão de unidades de área.</p>
+<div class="section-title">Operação matemática</div><div class="fields">
+<div class="field"><label for="ge-a">Primeiro valor</label><input id="ge-a" type="number" step="any" value="125"></div>
+<div class="field"><label for="ge-op">Operação</label><select id="ge-op"><option value="+">Adição (+)</option><option value="-">Subtração (−)</option><option value="*">Multiplicação (×)</option><option value="/">Divisão (÷)</option></select></div>
+<div class="field full"><label for="ge-b">Segundo valor</label><input id="ge-b" type="number" step="any" value="25"></div>
+</div><div class="actions"><button class="btn" onclick="calcGeral()">Calcular operação</button></div>
+<div class="section-title">Porcentagem</div><div class="fields"><div class="field"><label for="ge-pct">Porcentagem (%)</label><input id="ge-pct" type="number" step="any" value="12"></div><div class="field"><label for="ge-base">Valor-base</label><input id="ge-base" type="number" step="any" value="850"></div></div><div class="actions"><button class="btn" onclick="calcPct()">Calcular porcentagem</button></div>
+<div class="section-title">Área</div><div class="fields"><div class="field"><label for="ge-area-val">Área a converter</label><input id="ge-area-val" type="number" min="0" step="any" value="2.5"></div><div class="field"><label for="ge-area-type">Unidade de origem</label><select id="ge-area-type"><option value="ha">Hectares (ha)</option><option value="m2">Metros quadrados (m²)</option><option value="km2">Quilômetros quadrados (km²)</option></select></div></div><div class="actions"><button class="btn" onclick="calcArea()">Converter área</button><button class="btn secondary" onclick="resetForm('geral')">Restaurar exemplos</button></div></div>
+<div class="panel"><h2>Resultado</h2><p class="sub">O resultado da última ferramenta utilizada aparece abaixo.</p><div class="resultbox"><div class="resultlabel" id="ge-label">Operação matemática</div><div class="result" id="ge-result">150</div><div class="resultnote" id="ge-note">125 + 25</div></div><div class="formula"><strong>Conversões de área</strong>1 hectare (ha) = 10.000 m²<br>1 km² = 100 ha<br>1 hectare = 0,01 km²</div><p class="notice">Os cálculos são feitos no navegador. Não é necessário criar conta nem enviar os dados para um servidor.</p></div></div>
+</section>
+</main>
+<div class="footer">AgroCalc • Ferramenta educativa e estimativa. Confira os dados, as unidades e a metodologia antes de usar resultados em decisões financeiras ou contábeis.</div>
+</div>
+<script>
+const fmt=(v)=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number.isFinite(v)?v:0);
+const num=(id)=>Number(document.getElementById(id).value);
+const out=(id,v)=>document.getElementById(id).textContent=v;
+const nfmt=(v, max=2)=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:max}).format(v);
+function calcRenda(){let q=num('ra-prod'),p=num('ra-preco'),c=num('ra-custeio'),o=num('ra-outros'),a=num('ra-area');let rec=q*p,cust=c+o,r=rec-cust;out('ra-result',fmt(r));out('ra-receita',fmt(rec));out('ra-total',fmt(cust));out('ra-ha',a>0?fmt(r/a):'—');out('ra-note',r<0?'Os custos informados superam a receita.':'Estimativa após os custos informados.')}
+function calcDeprec(){let v=num('dp-valor'),res=num('dp-residual'),vida=num('dp-vida'),idade=num('dp-idade');if(vida<=0||res>v){alert('Informe vida útil maior que zero e valor residual menor ou igual ao valor de aquisição.');return}let base=v-res,anual=base/vida,acum=Math.min(base,anual*idade),atual=v-acum;out('dp-result',fmt(anual));out('dp-base',fmt(base));out('dp-mes',fmt(anual/12));out('dp-acum',fmt(acum));out('dp-atual',fmt(atual));out('dp-note',idade>=vida?'Vida útil atingida: depreciação acumulada limitada ao valor depreciável.':'Método linear, sem atualização monetária.')}
+function calcJuros(){let c=num('ju-cap'),i=num('ju-taxa')/100,n=num('ju-tempo'),tipo=document.getElementById('ju-tipo').value;if(n<0){alert('O número de períodos não pode ser negativo.');return}let m=tipo==='simp'?c*(1+i*n):c*Math.pow(1+i,n),j=m-c;out('ju-result',fmt(m));out('ju-capout',fmt(c));out('ju-acum',fmt(j));out('ju-totalrate',c!==0?nfmt(j/c*100)+'%':'—');out('ju-note',tipo==='simp'?'Juros simples.':'Juros compostos.')}
+function calcAgro(){let p=num('ag-prod'),a=num('ag-area'),pre=num('ag-preco'),c=num('ag-custo'),u=document.getElementById('ag-unid').value;if(a<=0){alert('A área precisa ser maior que zero.');return}let prod=p/a,rec=p*pre,m=rec-c;out('ag-result',nfmt(prod)+' '+u+'/ha');out('ag-rec',fmt(rec));out('ag-margem',fmt(m));out('ag-custo-un',p>0?fmt(c/p):'—');out('ag-note',m<0?'O custo informado supera a receita estimada.':'Produção total dividida pela área informada.')}
+function calcGeral(){let a=num('ge-a'),b=num('ge-b'),op=document.getElementById('ge-op').value;let r; if(op==='/'){if(b===0){alert('Não é possível dividir por zero.');return}r=a/b}else if(op==='+')r=a+b;else if(op==='-')r=a-b;else r=a*b;out('ge-label','Operação matemática');out('ge-result',nfmt(r,8));out('ge-note',`${nfmt(a)} ${op} ${nfmt(b)}`)}
+function calcPct(){let p=num('ge-pct'),b=num('ge-base'),r=b*p/100;out('ge-label','Porcentagem calculada');out('ge-result',fmt(r));out('ge-note',`${nfmt(p)}% de ${fmt(b)}`)}
+function calcArea(){let v=num('ge-area-val'),t=document.getElementById('ge-area-type').value,ha=t==='ha'?v:t==='m2'?v/10000:v*100;out('ge-label','Conversão de área');out('ge-result',nfmt(ha)+' ha');out('ge-note',`${nfmt(v)} ${t==='ha'?'ha':t==='m2'?'m²':'km²'} = ${nfmt(ha)} ha · ${nfmt(ha*10000)} m² · ${nfmt(ha/100)} km²`)}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.calc').forEach(s=>s.classList.toggle('hidden',s.id!==btn.dataset.tab))}));
+const defaults={renda:{'ra-prod':'1000','ra-preco':'2.5','ra-custeio':'900','ra-outros':'250','ra-area':''},deprec:{'dp-valor':'230000','dp-residual':'30000','dp-vida':'10','dp-idade':'3'},juros:{'ju-cap':'10000','ju-taxa':'1.5','ju-tempo':'12','ju-tipo':'comp'},agro:{'ag-prod':'7200','ag-area':'12','ag-preco':'2.4','ag-custo':'9000','ag-unid':'kg'},geral:{'ge-a':'125','ge-b':'25','ge-op':'+','ge-pct':'12','ge-base':'850','ge-area-val':'2.5','ge-area-type':'ha'}};
+function resetForm(section){for(const [id,val] of Object.entries(defaults[section]))document.getElementById(id).value=val;if(section==='renda')calcRenda();if(section==='deprec')calcDeprec();if(section==='juros')calcJuros();if(section==='agro')calcAgro();if(section==='geral')calcGeral()}
+calcRenda();calcDeprec();calcJuros();calcAgro();calcGeral();
+</script>
+</body>
+</html>
